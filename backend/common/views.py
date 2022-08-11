@@ -7,8 +7,5 @@ from rest_framework.response import Response
 
 @api_view(['GET'])
 def getFront(request):
-    #검색어
+    # 검색어
     return Response("HI")
-
-
-

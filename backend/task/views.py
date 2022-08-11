@@ -1,19 +1,16 @@
-
 from datetime import datetime
 from django.shortcuts import render
 from rest_framework.decorators import api_view, permission_classes
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated, IsAdminUser
 from django.contrib.auth import get_user_model
-
 from .serializers import TaskSerializer, TagSerializer
 from .models import Task, Tag
 from django.db.models import Q
 from datetime import date
-today = date.today()
 from djmoney.money import Money
-
 User = get_user_model()
+today = date.today()
 # Create your views here.
 
 
@@ -23,15 +20,14 @@ def gettasks(request):
 
     user = User.objects.get(pkid=2)
     print("유저", user)
-    #검색어
+    # 검색어
     # keyword = request.query_params.getlist('keyword', None)
     
-    #필터링
+    # 필터링
     q = Q()
     tasks = Task.objects.all()
 
     q &= Q(user=user)
-
 
     tasks = tasks.distinct().filter(
         q
@@ -42,9 +38,7 @@ def gettasks(request):
     return Response(serializer.data)
 
 
-
-
-#게시물 작성
+# 게시물 작성
 @api_view(['POST'])
 def posttask(request):
     data = request.data
@@ -60,14 +54,14 @@ def posttask(request):
     print(data['expected_pay_day'])
 
     task = Task(
-        user = user, 
-        title = data['title'],
-        country = data['country'],
-        income= Money(data['income_money'], data['income_currency']),
-        expected_pay_day = data['expected_pay_day'],
-        deadline = data['deadline'],
-        client = data['client'],
-        agency = data['agency'],
+        user=user,
+        title=data['title'],
+        country=data['country'],
+        income=Money(data['income_money'], data['income_currency']),
+        expected_pay_day=data['expected_pay_day'],
+        deadline=data['deadline'],
+        client=data['client'],
+        agency=data['agency'],
     )
     task.save()
 
@@ -77,10 +71,7 @@ def posttask(request):
     return Response({'post': serializer.data}, status=200)
 
 
-
-
-
-#게시물 수정
+# 게시물 수정
 @api_view(['PATCH'])
 def edittask(request, pk):
     data = request.data
@@ -104,7 +95,7 @@ def edittask(request, pk):
         task.updated = datetime.now()
 
         task.save()
-        
+
         serializer = TaskSerializer(task, many=False)
 
         return Response({'post': serializer.data, 'message': "EDITED"})
@@ -112,8 +103,7 @@ def edittask(request, pk):
         return Response({'message': "UNAUTHORIZED"})
 
 
-
-#게시물 활성화 > 비활성화
+# 게시물 활성화 > 비활성화
 @api_view(['PATCH'])
 def deactivatetask(request, pk):
 
@@ -129,11 +119,10 @@ def deactivatetask(request, pk):
         return Response({'message': "FAILED"})
 
 
-
-#게시물 비활성화 > 활성화
+# 게시물 비활성화 > 활성화
 @api_view(['PATCH'])
 def activatetask(request, pk):
-   
+
     try:
         task = task.objects.get(id=pk)
 
@@ -147,14 +136,13 @@ def activatetask(request, pk):
         return Response({'message': "FAILED"})
 
 
-
-#태그 작성
+# 태그 작성
 @api_view(['POST'])
 def posttag(request):
     data = request.data
 
     tag = Tag(
-        name = data['name'],
+        name=data['name'],
     )
     tag.save()
 
@@ -163,7 +151,7 @@ def posttag(request):
     return Response({'post': serializer.data}, status=200)
 
 
-#태그 수정
+# 태그 수정
 @api_view(['PATCH'])
 def edittag(request, pk):
     data = request.data
@@ -176,7 +164,7 @@ def edittag(request, pk):
         tag.updated = datetime.now()
 
         tag.save()
-        
+
         serializer = TagSerializer(tag, many=False)
 
         return Response({'post': serializer.data, 'message': "EDITED"})

@@ -3,14 +3,13 @@ from django.core.exceptions import ValidationError
 from django.core.validators import validate_email
 from django.utils.translation import gettext_lazy as _
 
+
 class CustomUserManager(BaseUserManager):
     def email_validator(self, email):
         try:
             validate_email(email)
         except ValidationError:
             raise ValidationError(_("You must provide a valid email address"))
-
-
 
     def _create_user(self, email, password, name, **extra_fields):
         """Create a user with the given email and password."""
@@ -30,16 +29,11 @@ class CustomUserManager(BaseUserManager):
         user.save(using=self._db)
         return user
 
-
-
     def create_user(self, email, password, name, **extra_fields):
         """Create and save a regular user with the given email and password."""
         extra_fields.setdefault('is_staff', False)
         extra_fields.setdefault('is_superuser', False)
         return self._create_user(email, password, name, **extra_fields)
-
-
-        
 
     def create_superuser(self, email, password, name, **extra_fields):
         extra_fields.setdefault("is_staff", True)
@@ -54,6 +48,5 @@ class CustomUserManager(BaseUserManager):
 
         if not password:
             raise ValueError(_("Superusers must have a password"))
-        
+
         return self._create_user(email, password, name, **extra_fields)
-  

@@ -1,14 +1,12 @@
 from django.db import models
 from django.conf import settings
-User = settings.AUTH_USER_MODEL
-# from django.contrib.auth.models import User
 from django_countries.fields import CountryField
-# from django.core.validators import MaxValueValidator
 from djmoney.models.fields import MoneyField
 from django.utils.translation import gettext_lazy as _
 from common.models import TimeStampedUUIDModel
 from djmoney.money import Money
 from djmoney.models.validators import MaxMoneyValidator, MinMoneyValidator
+User = settings.AUTH_USER_MODEL
 
 
 class Tag(TimeStampedUUIDModel):
@@ -18,11 +16,7 @@ class Tag(TimeStampedUUIDModel):
         return self.name
 
 
-
-
-
-
-#status 선택지
+# status 선택지
 class StatusType(models.TextChoices):
     NotStarted = "Not Started"
     InProgress = "In Progress"
@@ -32,9 +26,9 @@ class StatusType(models.TextChoices):
 class Task(TimeStampedUUIDModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
     title = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("title"))
-    country = CountryField(blank_label="(select country)", default='KR', null=True, blank=True, verbose_name=_("country")) #ex) NZ / country.name -> New Zealand / country.flag 
+    country = CountryField(blank_label="(select country)", default='KR', null=True, blank=True, verbose_name=_("country"))  # ex) NZ / country.name -> New Zealand / country.flag
     income = MoneyField(
-        max_digits=14, decimal_places=2, 
+        max_digits=14, decimal_places=2,
         default_currency="KRW", null=True,
         verbose_name=_("income"))
     expected_pay_day = models.DateTimeField(null=True, blank=True, verbose_name=_("expected_pay_day"))
@@ -44,7 +38,7 @@ class Task(TimeStampedUUIDModel):
     client = models.CharField(max_length=50, null=True, blank=True, verbose_name=_("client"))
     agency = models.CharField(max_length=50, null=True, blank=True, verbose_name=_("agency"))
     status = models.CharField(
-        max_length=15, 
+        max_length=15,
         choices=StatusType.choices,
         default=StatusType.NotStarted,
         verbose_name=_("status")
