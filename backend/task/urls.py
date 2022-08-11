@@ -9,5 +9,4 @@ urlpatterns = [
     path('activate/', views.activatetask, name="activatetask"),
     path('posttag/', views.posttag, name="posttag"),
     path('edittag/', views.edittag, name="edittag"),
-
 ]

@@ -14,7 +14,6 @@ from pathlib import Path
 import os
 
 
-
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
@@ -62,7 +61,6 @@ LOCAL_APPS = [
 INSTALLED_APPS = DJANGO_APPS + THIRD_PARTY_APPS + LOCAL_APPS
 
 
-
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'corsheaders.middleware.CorsMiddleware',
@@ -77,7 +75,7 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'backend.urls'
 
-#str(BASE_DIR / "templates")
+# str(BASE_DIR / "templates")
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -107,11 +105,10 @@ DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
         'NAME': os.environ.get("DB_NAME"),
-        'USER' : os.environ.get("DB_USER"),
-        'PASSWORD' : os.environ.get("DB_PASSWORD"),
-        'HOST' : os.environ.get("DB_HOST"),
-        'PORT' : os.environ.get("DB_PORT"),
-        
+        'USER': os.environ.get("DB_USER"),
+        'PASSWORD': os.environ.get("DB_PASSWORD"),
+        'HOST': os.environ.get("DB_HOST"),
+        'PORT': os.environ.get("DB_PORT"),
     }
 }
 DATABASES["default"]["ATOMIC_REQUESTS"] = True
@@ -160,7 +157,7 @@ USE_TZ = False
 
 SITE_ID = 1
 
-#프로덕션에서는 이해할 수없는 랜덤 문자열로 적는다
+# 프로덕션에서는 이해할 수없는 랜덤 문자열로 적는다
 ADMIN_URL = "supersecret/"
 # bitwarden
 
@@ -190,7 +187,7 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_URLS_REGEX = r"^/api/.*$"
 
-AUTH_USER_MODEL= "account.User"
+AUTH_USER_MODEL = "account.User"
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',  # must be enabled
@@ -198,14 +195,14 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 )
 
 REST_FRAMEWORK = {
-	"EXCEPTION_HANDLER": "common.exceptions.common_exception_handler",
-	"NON_FIELD_ERRORS_KEY" : "error",
+    "EXCEPTION_HANDLER": "common.exceptions.common_exception_handler",
+    "NON_FIELD_ERRORS_KEY": "error",
 }
 
 LOGGING = {
-    "version" : 1,
+    "version": 1,
     "disable_exsiting_loggers": False,
-    "formatters":  {
+    "formatters": {
         "verbose": {
             "format": "%(levelname)s %(name)-12s %(asctime)s %(module)s " "%(process)d %(thread)d %(message)s"
 
