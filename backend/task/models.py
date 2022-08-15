@@ -27,6 +27,7 @@ class Task(TimeStampedUUIDModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
     title = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("title"))
     country = CountryField(blank_label="(select country)", default='KR', null=True, blank=True, verbose_name=_("country"))  # ex) NZ / country.name -> New Zealand / country.flag
+    #시간대
     income = MoneyField(
         max_digits=14, decimal_places=2,
         default_currency="KRW", null=True,

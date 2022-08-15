@@ -12,7 +12,7 @@ https://docs.djangoproject.com/en/4.0/ref/settings/
 
 from pathlib import Path
 import os
-
+from datetime import timedelta
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -45,16 +45,23 @@ DJANGO_APPS = [
 
 THIRD_PARTY_APPS = [
     "rest_framework",
+    "dj_rest_auth",
+    "dj_rest_auth.registration",
     "django_filters",
     "drf_yasg",
     "corsheaders",
     "django_countries",
     "djmoney",
+    # django-allauth
+    'allauth',
+    'allauth.account',
+    'allauth.socialaccount',
+    'allauth.socialaccount.providers.google',
 ]
 
 LOCAL_APPS = [
     'common.apps.CommonConfig',
-    'account.apps.AccountConfig',
+    'accounts.apps.AccountsConfig',
     'task.apps.TaskConfig',
 ]
 
@@ -187,7 +194,30 @@ DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
 CORS_URLS_REGEX = r"^/api/.*$"
 
-AUTH_USER_MODEL = "account.User"
+###### 로그인
+
+AUTH_USER_MODEL = "accounts.User"
+REST_AUTH_TOKEN_MODEL = None
+
+#https://dj-rest-auth.readthedocs.io/en/latest/configuration.html
+REST_USE_JWT = True
+REST_AUTH_SERIALIZERS = {
+    'USER_DETAILS_SERIALIZER' : 'accounts.serializers.UserSerializer'
+}
+
+AUTHENTICATION_BACKENDS = (
+    'django.contrib.auth.backends.ModelBackend',  # <- 디폴트 모델 백엔드
+    'allauth.account.auth_backends.AuthenticationBackend', # <- 추가
+)
+
+ACCOUNT_AUTHENTICATION_METHOD = 'email'
+ACCOUNT_EMAIL_REQUIRED = True
+ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+ACCOUNT_USERNAME_REQUIRED = False
+ACCOUNT_LOGIN_ATTEMPTS_LIMIT = 10
+ACCOUNT_LOGIN_ATTEMPTS_TIMEOUT = 300
+SOCIALACCOUNT_AUTO_SIGNUP = True
+
 
 TEMPLATE_CONTEXT_PROCESSORS = (
     'django.core.context_processors.request',  # must be enabled
@@ -197,7 +227,30 @@ TEMPLATE_CONTEXT_PROCESSORS = (
 REST_FRAMEWORK = {
     "EXCEPTION_HANDLER": "common.exceptions.common_exception_handler",
     "NON_FIELD_ERRORS_KEY": "error",
+
+    'DEFAULT_PERMISSION_CLASSES': (
+        'rest_framework.permissions.IsAuthenticated',
+    ),
+    'DEFAULT_AUTHENTICATION_CLASSES': (
+        'rest_framework.authentication.BasicAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+        'dj_rest_auth.jwt_auth.JWTCookieAuthentication',
+    ),
 }
+
+REST_USE_JWT = True
+
+SIMPLE_JWT = {
+    'ACCESS_TOKEN_LIFETIME': timedelta(hours=2),
+    'REFRESH_TOKEN_LIFETIME': timedelta(days=7),
+    'ROTATE_REFRESH_TOKENS': False,
+    'BLACKLIST_AFTER_LOGIN' : True,
+    'UPDATE_LAST_LOGIN' : True
+}
+
+
+######
+
 
 LOGGING = {
     "version": 1,
