@@ -2,13 +2,6 @@
 
 # What is this PR ?
 
-- Docs:
-- Primary Commit:
-
-<!-- (necessary) -->
-
-## Change
-
 Please write as simple as possible.
 
 <!-- (optional) -->
