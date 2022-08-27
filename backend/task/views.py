@@ -14,12 +14,11 @@ today = date.today()
 # Create your views here.
 
 
+@permission_classes([IsAuthenticated])
 @api_view(['GET'])
 def gettasks(request):
-    # user = request.user
-
-    user = User.objects.get(pkid=2)
-    print("유저", user)
+    print(request.user)
+    user = request.user
     # 검색어
     # keyword = request.query_params.getlist('keyword', None)
     
@@ -39,6 +38,7 @@ def gettasks(request):
 
 
 # 게시물 작성
+@permission_classes([IsAuthenticated])
 @api_view(['POST'])
 def posttask(request):
     data = request.data
@@ -72,11 +72,12 @@ def posttask(request):
 
 
 # 게시물 수정
+@permission_classes([IsAuthenticated])
 @api_view(['PATCH'])
-def edittask(request, pk):
+def edittask(request):
     data = request.data
     user = request.user
-
+    pk = data['pk']
     print(data['income_money'], data['income_currency'])
 
     try:
@@ -104,6 +105,7 @@ def edittask(request, pk):
 
 
 # 게시물 활성화 > 비활성화
+@permission_classes([IsAuthenticated])
 @api_view(['PATCH'])
 def deactivatetask(request, pk):
 
@@ -120,6 +122,7 @@ def deactivatetask(request, pk):
 
 
 # 게시물 비활성화 > 활성화
+@permission_classes([IsAuthenticated])
 @api_view(['PATCH'])
 def activatetask(request, pk):
 
@@ -137,6 +140,7 @@ def activatetask(request, pk):
 
 
 # 태그 작성
+@permission_classes([IsAuthenticated])
 @api_view(['POST'])
 def posttag(request):
     data = request.data
@@ -152,6 +156,7 @@ def posttag(request):
 
 
 # 태그 수정
+@permission_classes([IsAuthenticated])
 @api_view(['PATCH'])
 def edittag(request, pk):
     data = request.data
