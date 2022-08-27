@@ -14,5 +14,4 @@ class UserSerializer(serializers.ModelSerializer):
             'is_active', 'created')
 
     def create(self, validated_data):
-        # TODO do i really need to do this?
         return User.objects.create_user(**validated_data)
