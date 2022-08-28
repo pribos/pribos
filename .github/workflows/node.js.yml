@@ -30,7 +30,7 @@ jobs:
 #        cache: 'npm'
         cache-dependency-path: 'frontend/yarn.lock'
     - run: yarn install
-    - run: yarn run build --if-present
+    - run: yarn run build
     
     # test
     - run: echo Hello, world!
