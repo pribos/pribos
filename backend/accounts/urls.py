@@ -6,3 +6,4 @@ urlpatterns = [
     path('google/callback/', views.google_callback, name="google_callback"),
     path('google/finish/', views.GoogleLogin.as_view(), name='google_finish'),
 ]
+
