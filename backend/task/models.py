@@ -27,13 +27,15 @@ class Task(TimeStampedUUIDModel):
     user = models.ForeignKey(User, on_delete=models.CASCADE, verbose_name=_("user"))
     title = models.CharField(max_length=100, null=True, blank=True, verbose_name=_("title"))
     country = CountryField(blank_label="(select country)", default='KR', null=True, blank=True, verbose_name=_("country"))  # ex) NZ / country.name -> New Zealand / country.flag
+    #시간대
     income = MoneyField(
         max_digits=14, decimal_places=2,
         default_currency="KRW", null=True,
         verbose_name=_("income"))
     expected_pay_day = models.DateTimeField(null=True, blank=True, verbose_name=_("expected_pay_day"))
     actual_pay_day = models.DateTimeField(null=True, blank=True, verbose_name=_("actual_pay_day"))
-    deadline = models.DateTimeField(null=True, blank=True, verbose_name=_("deadline"))
+    deadline_tz = models.DateTimeField(null=True, blank=True, verbose_name=_("deadline_tz"))
+    deadline_kst = models.DateTimeField(null=True, blank=True, verbose_name=_("deadline_kst"))
     submit_day = models.DateTimeField(null=True, blank=True, verbose_name=_("submit_day"))
     client = models.CharField(max_length=50, null=True, blank=True, verbose_name=_("client"))
     agency = models.CharField(max_length=50, null=True, blank=True, verbose_name=_("agency"))
