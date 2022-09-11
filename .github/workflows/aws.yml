@@ -40,7 +40,7 @@ env:
   CONTAINER_NAME: ${{ secrets.MY_CONTAINER_NAME  }}          # set this to the name of the container in the
                                                              # containerDefinitions section of your task definition
                                                              
-  IMAGE_TAG : $${{ secrets.IMAGE_TAG }}
+  IMAGE_TAG : ${{ secrets.IMAGE_TAG }}
 
 permissions:
   contents: read
