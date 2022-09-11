@@ -8,7 +8,6 @@ RUN yarn install \
 FROM python:3.9-alpine
 
 RUN mkdir /code
-
 WORKDIR /code
 COPY ./backend/ /code/
 COPY --from=FRONTEND /code/frontend/src/App.tsx .
@@ -20,5 +19,7 @@ EXPOSE 8000
 RUN ["python", "manage.py", "makemigrations"]
 
 RUN ["python", "manage.py", "migrate"]
+
+RUN []
 
 ENTRYPOINT [ "python", "manage.py", "runserver", "0.0.0.0:8000" ]
