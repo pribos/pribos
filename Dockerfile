@@ -8,6 +8,7 @@ RUN yarn install \
 FROM python:3.9-alpine
 
 RUN mkdir /code
+
 WORKDIR /code
 COPY ./backend/ /code/
 COPY --from=FRONTEND /code/frontend/src/App.tsx .
