@@ -5,7 +5,7 @@ from drf_yasg import openapi
 from drf_yasg.views import get_schema_view
 from rest_framework import permissions
 from django.conf.urls.static import static
-
+from . import views
 
 schema_view = get_schema_view(
     openapi.Info(
@@ -20,7 +20,8 @@ schema_view = get_schema_view(
 )
 urlpatterns = [
     path(settings.ADMIN_URL, admin.site.urls),
-    path('api/common/', include('common.urls')),
+    # path('', views.getFront, name="front"),
+    path('', include('common.urls')),
     path('api/accounts/', include('dj_rest_auth.urls')),
     path('api/accounts/', include('allauth.urls')),
     path('api/accounts/', include('accounts.urls')),
