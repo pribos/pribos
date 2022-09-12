@@ -17,6 +17,7 @@ RUN apk add --no-cache gcc musl-dev postgresql-dev curl
 RUN pip install -r /code/backend/requirements/production.txt
 EXPOSE 8000
 WORKDIR /code/backend
+
 RUN ["python", "manage.py", "makemigrations"]
 
 RUN ["python", "manage.py", "migrate"]
