@@ -75,8 +75,9 @@ jobs:
 
     - name: Build, tag, and push image to Amazon ECR
       id: build-image
-      uses: docker/build-push-action@v1
-      with:
+      env:
+        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+        IMAGE_TAG: ${{ github.sha }}
         SECRET_KEY: ${{ secrets.SECRET_KEY }}               # django secret key                                                        
         DEBUG: ${{ secrets.DEBUG }}
         db: ${{ secrets.db }}                                      # db
@@ -88,9 +89,6 @@ jobs:
         SOCIAL_AUTH_GOOGLE_CLIENT_ID: ${{ secrets.SOCIAL_AUTH_GOOGLE_CLIENT_ID }}
         SOCIAL_AUTH_GOOGLE_SECRET: ${{ secrets.SOCIAL_AUTH_GOOGLE_SECRET }}
         STATE: ${{ secrets.STATE }}
-      env:
-        ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
