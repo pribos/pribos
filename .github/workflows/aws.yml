@@ -94,7 +94,18 @@ jobs:
         # push it to ECR so that it can
         # be deployed to ECS.
         # python -c 'import os;print(os.environ)'
-        docker build --build-arg SECRET_KEY=$SECRET_KEY -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build --build-arg SECRET_KEY \
+                    --build-arg DB_USER \
+                    --build-arg DEBUG \
+                    --build-arg DB_NAME \
+                    --build-arg DB_USER \
+                    --build-arg DB_PASSWORD \
+                    --build-arg DB_HOST \
+                    --build-arg DB_PORT \
+                    --build-arg db \
+                    --build-arg SOCIAL_AUTH_GOOGLE_CLIENT_ID \
+                    --build-arg SOCIAL_AUTH_GOOGLE_SECRET \
+                    -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         
