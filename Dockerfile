@@ -18,6 +18,9 @@ RUN pip install -r /code/backend/requirements/production.txt
 EXPOSE 8000
 WORKDIR /code/backend
 
+ARG SECRET_KEY
+ENV SECRET_KEY ${SECRET_KEY}
+
 RUN ["python", "manage.py", "makemigrations"]
 
 RUN ["python", "manage.py", "migrate"]
