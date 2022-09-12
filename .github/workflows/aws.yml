@@ -37,8 +37,8 @@ env:
   ECS_CLUSTER: ${{ secrets.MY_ECS_CLUSTER  }}                # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: ${{ secrets.MY_ECS_TASK_DEFINITION }} # set this to the path to your Amazon ECS task definition
                                                              # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: ${{ secrets.MY_CONTAINER_NAME  }}          # set this to the name of the container in the
-  SECRET_KEY: ${{ secrets.SECRET_KEY }}                      # django secret key
+  CONTAINER_NAME: ${{ secrets.MY_CONTAINER_NAME  }}          # set this to the name of the container in the                                                          # containerDefinitions section of your task definition  
+  SECRET_KEY: ${{ secrets.SECRET_KEY }}                      # django secret key                                                        
   DEBUG: ${{ secrets.DEBUG }}
   db: ${{ secrets.db }}                                      # db
   DB_NAME: ${{ secrets.DB_NAME }}
@@ -78,13 +78,14 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}                      # django secret key
+        IMAGE_TAG: ${{ github.sha }}  
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # python -c 'import os;print(os.environ)'
+        docker build --build-arg SECRET_KEY=$SECRET_KEY -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         
