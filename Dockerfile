@@ -18,6 +18,9 @@ RUN pip install -r /code/backend/requirements/production.txt
 EXPOSE 8000
 WORKDIR /code/backend
 
+RUN --mount=type=secret,id=SECRET_KEY \
+   export SECRET_KEY=$(cat /run/secrets/SECRET_KEY)
+
 RUN ["python", "manage.py", "makemigrations"]
 
 RUN ["python", "manage.py", "migrate"]
