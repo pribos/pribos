@@ -4,17 +4,17 @@ import os
 
 DEBUG = True
 
-SECRET_KEY = ${{ secrets.SECRET_KEY }} 
+SECRET_KEY = os.environ["SECRET_KEY"]
 
 ALLOWED_HOSTS = ["*"]
 
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql_psycopg2',
-        'NAME': ${{ secrets.DB_NAME }},
-        'USER': ${{ secrets.DB_USER }},
-        'PASSWORD': ${{ secrets.DB_PASSWORD }},
-        'HOST': ${{ secrets.DB_HOST }},
-        'PORT': ${{ secrets.DB_PORT }},
+        'NAME': os.environ["DB_NAME"],
+        'USER': os.environ["DB_USER"],
+        'PASSWORD': os.environ["DB_PASSWORD"],
+        'HOST': os.environ["DB_HOST"],
+        'PORT': os.environ["DB_PORT"],
     }
 }
