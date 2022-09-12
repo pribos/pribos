@@ -51,7 +51,7 @@ env:
   SOCIAL_AUTH_GOOGLE_CLIENT_ID: ${{ secrets.SOCIAL_AUTH_GOOGLE_CLIENT_ID }}
   SOCIAL_AUTH_GOOGLE_SECRET: ${{ secrets.SOCIAL_AUTH_GOOGLE_SECRET }}
   STATE: ${{ secrets.STATE }}
-  
+
 permissions:
   contents: read
 
