@@ -40,6 +40,7 @@ env:
   CONTAINER_NAME: ${{ secrets.MY_CONTAINER_NAME  }}          # set this to the name of the container in the
 
                                                              # containerDefinitions section of your task definition                                                          
+
   SECRET_KEY: ${{ secrets.SECRET_KEY }}                      # django secret key
   DEBUG: ${{ secrets.DEBUG }}
   db: ${{ secrets.db }}                                      # db
