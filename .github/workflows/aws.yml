@@ -40,8 +40,6 @@ env:
   CONTAINER_NAME: ${{ secrets.MY_CONTAINER_NAME  }}          # set this to the name of the container in the
 
                                                              # containerDefinitions section of your task definition                                                          
-
-  SECRET_KEY: ${{ secrets.SECRET_KEY }}                      # django secret key
   DEBUG: ${{ secrets.DEBUG }}
   db: ${{ secrets.db }}                                      # db
   DB_NAME: ${{ secrets.DB_NAME }}
@@ -98,12 +96,10 @@ jobs:
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
-        echo "@@@@@@@@@@@@@SECRET KEY@@@@@@@@@@@@@@@@@@@@" "${{ secrets.SECRET_KEY }}"
         docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         
-
     - name: Fill in the new image ID in the Amazon ECS task definition
       id: task-def
       uses: aws-actions/amazon-ecs-render-task-definition@v1
