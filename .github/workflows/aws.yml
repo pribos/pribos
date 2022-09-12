@@ -77,10 +77,10 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}               # django secret key                                                        
+        IMAGE_TAG: ${{ github.sha }}  
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}
         DEBUG: ${{ secrets.DEBUG }}
-        db: ${{ secrets.db }}                                      # db
+        db: ${{ secrets.db }}                                      
         DB_NAME: ${{ secrets.DB_NAME }}
         DB_USER: ${{ secrets.DB_USER }}
         DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
