@@ -37,8 +37,7 @@ env:
   ECS_CLUSTER: ${{ secrets.MY_ECS_CLUSTER  }}                # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: ${{ secrets.MY_ECS_TASK_DEFINITION }} # set this to the path to your Amazon ECS task definition
                                                              # file, e.g. .aws/task-definition.json
-  CONTAINER_NAME: ${{ secrets.MY_CONTAINER_NAME  }}          # set this to the name of the container in the
-                                                             # containerDefinitions section of your task definition  
+  CONTAINER_NAME: ${{ secrets.MY_CONTAINER_NAME  }}          # set this to the name of the container in the                                                          # containerDefinitions section of your task definition  
   SECRET_KEY: ${{ secrets.SECRET_KEY }}                      # django secret key                                                        
   DEBUG: ${{ secrets.DEBUG }}
   db: ${{ secrets.db }}                                      # db
