@@ -36,7 +36,6 @@ env:
   ECS_SERVICE: ${{ secrets.MY_ECS_SERVICE }}                 # set this to your Amazon ECS service name
   ECS_CLUSTER: ${{ secrets.MY_ECS_CLUSTER  }}                # set this to your Amazon ECS cluster name
   ECS_TASK_DEFINITION: ${{ secrets.MY_ECS_TASK_DEFINITION }} # set this to the path to your Amazon ECS task definition
-                                                             # file, e.g. .aws/task-definition.json
   CONTAINER_NAME: ${{ secrets.MY_CONTAINER_NAME  }}          # set this to the name of the container in the                                                          # containerDefinitions section of your task definition  
   SECRET_KEY: ${{ secrets.SECRET_KEY }}                      # django secret key                                                        
   DEBUG: ${{ secrets.DEBUG }}
@@ -78,8 +77,19 @@ jobs:
       id: build-image
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-        IMAGE_TAG: ${{ github.sha }}  
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
+        IMAGE_TAG: ${{ github.sha }}
+      with:
+        SECRET_KEY: ${{ secrets.SECRET_KEY }}               # django secret key                                                        
+        DEBUG: ${{ secrets.DEBUG }}
+        db: ${{ secrets.db }}                                      # db
+        DB_NAME: ${{ secrets.DB_NAME }}
+        DB_USER: ${{ secrets.DB_USER }}
+        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
+        DB_HOST: ${{ secrets.DB_HOST }}
+        DB_PORT: ${{ secrets.DB_PORT }}
+        SOCIAL_AUTH_GOOGLE_CLIENT_ID: ${{ secrets.SOCIAL_AUTH_GOOGLE_CLIENT_ID }}
+        SOCIAL_AUTH_GOOGLE_SECRET: ${{ secrets.SOCIAL_AUTH_GOOGLE_SECRET }}
+        STATE: ${{ secrets.STATE }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
