@@ -78,34 +78,24 @@ jobs:
       env:
         ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
         IMAGE_TAG: ${{ github.sha }}  
-        SECRET_KEY: ${{ secrets.SECRET_KEY }}
-        DEBUG: ${{ secrets.DEBUG }}
-        db: ${{ secrets.db }}                                      
-        DB_NAME: ${{ secrets.DB_NAME }}
-        DB_USER: ${{ secrets.DB_USER }}
-        DB_PASSWORD: ${{ secrets.DB_PASSWORD }}
-        DB_HOST: ${{ secrets.DB_HOST }}
-        DB_PORT: ${{ secrets.DB_PORT }}
-        SOCIAL_AUTH_GOOGLE_CLIENT_ID: ${{ secrets.SOCIAL_AUTH_GOOGLE_CLIENT_ID }}
-        SOCIAL_AUTH_GOOGLE_SECRET: ${{ secrets.SOCIAL_AUTH_GOOGLE_SECRET }}
-        STATE: ${{ secrets.STATE }}
       run: |
         # Build a docker container and
         # push it to ECR so that it can
         # be deployed to ECS.
         # python -c 'import os;print(os.environ)'
-        docker build --build-arg SECRET_KEY \
-                    --build-arg DB_USER \
-                    --build-arg DEBUG \
-                    --build-arg DB_NAME \
-                    --build-arg DB_USER \
-                    --build-arg DB_PASSWORD \
-                    --build-arg DB_HOST \
-                    --build-arg DB_PORT \
-                    --build-arg db \
-                    --build-arg SOCIAL_AUTH_GOOGLE_CLIENT_ID \
-                    --build-arg SOCIAL_AUTH_GOOGLE_SECRET \
-                    -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        # docker build --build-arg SECRET_KEY \
+        #             --build-arg DB_USER \
+        #             --build-arg DEBUG \
+        #             --build-arg DB_NAME \
+        #             --build-arg DB_USER \
+        #             --build-arg DB_PASSWORD \
+        #             --build-arg DB_HOST \
+        #             --build-arg DB_PORT \
+        #             --build-arg db \
+        #             --build-arg SOCIAL_AUTH_GOOGLE_CLIENT_ID \
+        #             --build-arg SOCIAL_AUTH_GOOGLE_SECRET \
+        #             -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
+        docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG .
         docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
         echo "::set-output name=image::$ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG"
         
